@@ -5,6 +5,7 @@ import com.zhiliao.service.AuthorizationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @date: 2019/10/17 14:14
  **/
 @RestController
-@RequestMapping(value = "/authorization")
+@RequestMapping(value = "/code")
 public class AuthorizationController {
 
     @Autowired
@@ -26,9 +27,10 @@ public class AuthorizationController {
     /**
      * 获取公钥
      */
-    @RequestMapping(value = "/getPublicKey")
+    @GetMapping(value = "/getPublicKey")
     public Result getPublicKey(){
         try {
+            System.out.println(111);
             return Result.createSuccess("200",authorizationService.getPublicKey());
         } catch (Exception e) {
             return Result.createError();

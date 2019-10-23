@@ -31,13 +31,7 @@ public class AuthorizationService {
         String publicValueNoRepeat = privateKeyStr.trim().replaceAll("\n", "");
         System.out.println(publicKeyNoRepeat);
         System.out.println(publicValueNoRepeat);
-
-        return null;
-/*        // 公钥为key ,value为私钥
-        Cache cache = cacheManager.getCache("publickey");
-        cache.put(publicKeyNoRepeat, publicValueNoRepeat);*/
-/*
-        return publicKeyNoRepeat;*/
+        return publicKeyNoRepeat;
     }
 
 
