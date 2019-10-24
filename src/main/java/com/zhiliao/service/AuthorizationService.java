@@ -1,5 +1,6 @@
 package com.zhiliao.service;
 
+import com.zhiliao.config.RedisConfig;
 import com.zhiliao.utils.RsaUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
