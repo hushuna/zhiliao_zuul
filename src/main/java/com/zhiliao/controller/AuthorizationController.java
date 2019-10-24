@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @date: 2019/10/17 14:14
  **/
 @RestController
-@RequestMapping(value = "/code")
+@RequestMapping(value = "/key")
 public class AuthorizationController {
 
     @Autowired
@@ -33,6 +33,7 @@ public class AuthorizationController {
             System.out.println(111);
             return Result.createSuccess("200",authorizationService.getPublicKey());
         } catch (Exception e) {
+            logger.error("<<======获取公钥-失败 url:{{}} params:{} reason:{}", "/key/getPublicKey", e);
             return Result.createError();
         }
     }

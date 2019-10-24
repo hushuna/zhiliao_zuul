@@ -10,7 +10,6 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 @EnableDiscoveryClient
 @EnableZuulProxy
-@ComponentScan(basePackages = {"com.zhiliao.service"})
 public class ZhiliaoZuulApplication {
 
 	public static void main(String[] args) {
