@@ -6,6 +6,8 @@ import com.zhiliao.service.AuthorizationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +26,26 @@ public class AuthorizationController {
     @Autowired
     private AuthorizationService authorizationService;
 
+
     private Logger logger = LoggerFactory.getLogger(AuthorizationController.class);
+
+    @Autowired
+    private CacheManager cacheManager;
+
+    @GetMapping(value = "/getCahe")
+    public void getCahe(){
+        String key="publickey::MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArXQR4JRK0S7fym9QHnwPcEOp8dbV9mg7\n" +
+                "iKN7ERUqFiaSS4129OAP1kfT0cy47xQ86H5UsuKZ6+bYCpZaJiCbTYdKLHImTRaPMevHzUdBoi9m\n" +
+                "R8rW6PM6db+EjiJEg9oHF4o914XYiIC3ze35aFNQatsiypYtQbe1hQNNnaJz1r2k2ct7KPkYzgFP\n" +
+                "tJ1PGp1sJFPlzJpyjk9WZhJlhCSW26/TO9HROZRZORRFJ1dxNXh4O6TsqoJUoA74EqrZiPIcs2u/\n" +
+                "B/kjX42ZQaQwJ6wnmOdYS6XxWeSeeIEIGJjdVzN5IGwJAfKjcKz9R/5w/V5aOa0Oi4SnzZB537VJ\n" +
+                "13bdRwIDAQAB";
+        Cache cache = cacheManager.getCache("publickey");
+        Cache valueWrapper = (Cache) cache.get(key);
+        System.out.println(valueWrapper);
+
+
+    }
 
 
     /**
