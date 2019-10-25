@@ -1,8 +1,6 @@
 package com.zhiliao.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.redis.core.RedisTemplate;
+import com.zhiliao.utils.RedisUtil;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/test")
 public class TestGetRedis {
 
-    private static RedisTemplate<Object, Object> myRedisTemplate = null;
+/*    private static RedisTemplate<Object, Object> myRedisTemplate = null;
 
     @Autowired
     public TestGetRedis(@Qualifier("myRedisTemplate") RedisTemplate<Object, Object> myRedisTemplate) {
@@ -25,10 +23,11 @@ public class TestGetRedis {
         System.out.println(s);
         String s1 = String.valueOf(myRedisTemplate.opsForHash().get("name1", "snica"));
         System.out.println(s1);
-    }
+    }*/
 
-    @GetMapping(value = "/put")
-    public void put(){
-        myRedisTemplate.opsForValue().set("name2","333");
+    @GetMapping(value = "/setValue")
+    public void setValue(){
+        RedisUtil.setValue("name4","22222");
+        System.out.println(1);
     }
 }

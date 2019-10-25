@@ -28,7 +28,7 @@ public class RedisUtil {
      * @param key
      * @param value
      */
-    public static void setValue(String key,String value){
+    public static void setValue(Object key,Object value){
         myRedisTemplate.opsForValue().set(key,value);
     }
 
