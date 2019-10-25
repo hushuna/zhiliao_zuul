@@ -1,26 +1,43 @@
 package com.zhiliao.config;
 
-import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.cache.RedisCacheConfiguration;
-import org.springframework.data.redis.cache.RedisCacheManager;
-import org.springframework.data.redis.cache.RedisCacheWriter;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
-import org.springframework.data.redis.serializer.RedisSerializationContext;
-import org.springframework.data.redis.serializer.RedisSerializer;
-
-import java.time.Duration;
 
 @Configuration
-public class RedisConfig {
+public class RedisConfig extends CachingConfigurerSupport {
 
-    /**
+
+    @Bean(name="genericJackson2JsonRedisSerializer")
+    public GenericJackson2JsonRedisSerializer genericJackson2JsonRedisSerializer() {
+        return new GenericJackson2JsonRedisSerializer();
+    }
+
+    @Bean(name = "myRedisTemplate")
+    public RedisTemplate<Object,Object> myRedisTemplate(RedisConnectionFactory redisConnectionFactory, GenericJackson2JsonRedisSerializer ser){
+        RedisTemplate template = new RedisTemplate();
+        template.setConnectionFactory(redisConnectionFactory);
+        //设置序列化方法
+        template.setDefaultSerializer(ser);
+        return template;
+    }
+
+/*    public CacheManager cacheManager(RedisTemplate redisTemplate){
+
+        RedisCacheManager manager = new RedisCacheManager(redisTemplate);
+        return
+    }*/
+
+
+
+/*    *//**
      * 缓存管理器
      * @param redisConnectionFactory
      * @return
-     */
+     *//*
     @Bean
     public CacheManager cacheManager(RedisConnectionFactory redisConnectionFactory) {
         //初始化一个RedisCacheWriter
@@ -35,5 +52,5 @@ public class RedisConfig {
         defaultCacheConfig.entryTtl(Duration.ofSeconds(30));
         //初始化RedisCacheManager
         return new RedisCacheManager(redisCacheWriter, defaultCacheConfig);
-    }
+    }*/
 }
