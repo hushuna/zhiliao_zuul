@@ -28,9 +28,9 @@ public class AuthenticationController {
     /**
      * 获取token
      */
-    @PostMapping(value = "/PostMapping")
-    public Result getToken(String ciphertext,String publicKey){
+    @PostMapping(value = "/getToken")
+    public Result getToken(String ciphertext,String publicKey) throws Exception {
 
-        return Result.createSuccess("200",null);
+        return Result.createSuccess("200",authenticationService.getToken(ciphertext,publicKey));
     }
 }

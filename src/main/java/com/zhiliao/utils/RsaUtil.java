@@ -1,5 +1,6 @@
 package com.zhiliao.utils;
 
+import org.springframework.stereotype.Component;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
@@ -14,6 +15,7 @@ import java.security.spec.X509EncodedKeySpec;
  * @description:
  * @date: 2019/10/17 14:23
  **/
+@Component
 public class RsaUtil {
 
     /**

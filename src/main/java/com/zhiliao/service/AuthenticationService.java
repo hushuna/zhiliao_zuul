@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.security.KeyPair;
+import java.security.PrivateKey;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,7 +21,9 @@ public class AuthenticationService {
         KeyPair keyPair = RsaUtil.getKeyPair();
         String publicKey = RsaUtil.getPublicKey(keyPair);
         String privateKey = RsaUtil.getPrivateKey(keyPair);
-        RedisUtil.setValue(publicKey,privateKey);
+        String publicKey1 = publicKey.replaceAll("\r\n", "");
+        String privateKey1 = privateKey.replaceAll("\r\n", "");
+        RedisUtil.setValue(publicKey1,privateKey1);
 
         //加密
         String phone="19945096907";
@@ -43,16 +46,27 @@ public class AuthenticationService {
      * @param ciphertext
      * @param publicKey
      */
-    public Map<String,Object> getToken(String ciphertext,String publicKey){
+    public Map<String,Object> getToken(String ciphertext,String publicKey) throws Exception {
         if (StringUtils.isEmpty(ciphertext)){
             throw new BizException("系统参数错误！");
         }
         if (StringUtils.isEmpty(publicKey)){
             throw new BizException("系统参数错误！");
         }
+        String privateKey = RedisUtil.get(publicKey);
 
+        PrivateKey privateKey1 = RsaUtil.string2PrivateKey(privateKey);
+        byte[] bytes = RsaUtil.base642Byte(ciphertext);
+        byte[] bytes1 = RsaUtil.privateDecrypt(bytes, privateKey1);
+        String s = RsaUtil.byte2Base64(bytes1);
+        if (s.length()==11){
+            //解密成功
+        }else {
+            throw new BizException("认证失败！");
+        }
 
-
+        String s2 = RedisUtil.get("name2");
+        System.out.println(s2);
         return null;
     }
 
