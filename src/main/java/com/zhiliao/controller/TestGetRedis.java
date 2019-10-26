@@ -5,29 +5,24 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+import java.util.Set;
+
 @RestController
 @RequestMapping(value = "/test")
 public class TestGetRedis {
 
-/*    private static RedisTemplate<Object, Object> myRedisTemplate = null;
-
-    @Autowired
-    public TestGetRedis(@Qualifier("myRedisTemplate") RedisTemplate<Object, Object> myRedisTemplate) {
-        TestGetRedis.myRedisTemplate = myRedisTemplate;
-    }
-
-    @GetMapping(value = "/getKey")
-    public void getKey(){
-        String key="name2";
-        String s = String.valueOf(myRedisTemplate.opsForValue().get(key));
-        System.out.println(s);
-        String s1 = String.valueOf(myRedisTemplate.opsForHash().get("name1", "snica"));
-        System.out.println(s1);
-    }*/
-
     @GetMapping(value = "/setValue")
     public void setValue(){
-        RedisUtil.setValue("name4","22222");
-        System.out.println(1);
+        /*RedisUtil.setValue("name4","22222");
+        System.out.println(1);*/
+        Map<Object, Object> name1 = RedisUtil.getHash("name1");
+        System.out.println(name1);
+        Set<Object> objects = name1.keySet();
+        for (Object object : objects) {
+
+        }
     }
+
+
 }
