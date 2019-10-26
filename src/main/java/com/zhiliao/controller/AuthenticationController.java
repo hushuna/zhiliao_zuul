@@ -30,6 +30,7 @@ public class AuthenticationController {
             logger.error("<<======获取token-失败 url:{{}} params:{}","/authentication/getToken",b);
             return Result.createBizError(-500,b.getMessage());
         }catch (Exception e) {
+            logger.error("<<======获取token-失败 url:{{}} params:{}","/authentication/getToken",e);
             return Result.createError();
         }
     }
