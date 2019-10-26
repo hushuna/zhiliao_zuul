@@ -77,6 +77,7 @@ public class AuthenticationService {
         token = token.replaceAll("\n", "");
         token = token.replaceAll("\\+", "");
         RedisUtil.setValue(token,token);
+        RedisUtil.setTime(token,token, (long)3);
         map.put("token",token);
         return map;
     }

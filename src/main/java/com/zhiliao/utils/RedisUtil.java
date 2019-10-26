@@ -38,7 +38,7 @@ public class RedisUtil {
      * 设置有效时间
      */
     public static void setTime(Object key,Object value,Long time){
-        myRedisTemplate.opsForValue().set(key,value,time, TimeUnit.SECONDS);
+        myRedisTemplate.opsForValue().set(key,value,time, TimeUnit.HOURS);
     }
 
 }
