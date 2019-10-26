@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
+import java.util.concurrent.TimeUnit;
+
 @Component
 public class RedisUtil {
 
@@ -30,6 +32,13 @@ public class RedisUtil {
      */
     public static void setValue(Object key,Object value){
         myRedisTemplate.opsForValue().set(key,value);
+    }
+
+    /**
+     * 设置有效时间
+     */
+    public static void setTime(Object key,Object value,Long time){
+        myRedisTemplate.opsForValue().set(key,value,time, TimeUnit.SECONDS);
     }
 
 }

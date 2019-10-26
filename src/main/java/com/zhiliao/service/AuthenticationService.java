@@ -8,6 +8,7 @@ import org.springframework.util.StringUtils;
 
 import java.security.KeyPair;
 import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -53,21 +54,31 @@ public class AuthenticationService {
         if (StringUtils.isEmpty(publicKey)){
             throw new BizException("系统参数错误！");
         }
+        Map<String,Object> map = new HashMap<>();
         String privateKey = RedisUtil.get(publicKey);
-
+        //获取私钥
         PrivateKey privateKey1 = RsaUtil.string2PrivateKey(privateKey);
+        //解密
         byte[] bytes = RsaUtil.base642Byte(ciphertext);
         byte[] bytes1 = RsaUtil.privateDecrypt(bytes, privateKey1);
         String s = RsaUtil.byte2Base64(bytes1);
-        if (s.length()==11){
-            //解密成功
-        }else {
-            throw new BizException("认证失败！");
+        if (s.length()!=11){
+            //解密失败   页面跳转到登陆页面
+            map.put("token",0);
+            return map;
         }
-
-        String s2 = RedisUtil.get("name2");
-        System.out.println(s2);
-        return null;
+        KeyPair keyPair = RsaUtil.getKeyPair();
+        String publicKey1 = RsaUtil.getPublicKey(keyPair);
+        PublicKey publicKey2 = RsaUtil.string2PublicKey(publicKey1);
+        byte[] bytes2 = RsaUtil.base642Byte(s);
+        byte[] bytes3 = RsaUtil.publicEncrypt(bytes2, publicKey2);
+        String token = RsaUtil.byte2Base64(bytes3);
+        token = token.replaceAll("\r\n", "");
+        token = token.replaceAll("\n", "");
+        token = token.replaceAll("\\+", "");
+        RedisUtil.setValue(token,token);
+        map.put("token",token);
+        return map;
     }
 
 }
